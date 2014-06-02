@@ -1,0 +1,37 @@
+<div class="jumbotron">
+	<h2>Szczegóły pracownika</h2>
+	<br>
+	<br>
+	<div class="row">
+		<div class="col-md-3">
+			<form action="#/employees" ng-submit="zaktualizujDanePracownika(selectedEmployee.firstName,selectedEmployee.surname,selectedEmployee.title)">
+				<label style="font-size:14px;font-weight:bold;">Imię: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.firstName" required/>
+				<br>
+				<label style="font-size:14px;font-weight:bold;">Nazwisko: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.surname" required/>
+				<br>
+				<label style="font-size:14px;font-weight:bold;">Tytuł: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.title" required/>
+				<br>
+				<label style="font-size:14px;font-weight:bold;">Email: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.email" required/>
+				<br>
+				<label style="font-size:14px;font-weight:bold;">Przedmiot: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.speciality" required/>
+				<br>
+				<label style="font-size:14px;font-weight:bold;">Minimum Etatowe: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.minimumStaffing" required/>
+				<br>
+				<label style="font-size:14px;font-weight:bold;">Rodzaj zatrudnienia: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.employmentType" required/>
+				<br>
+				<label style="font-size:14px;font-weight:bold;">Dostępność: </label>
+				<input type="text" class="form-control" ng-model="selectedEmployee.availability" required/>
+				<br>
+<input type="submit" value="Edit" class="btn btn-danger"/>
+</form>
+<br/>
+	<a href="#/employees">Powrót</a>
+</div></div>
+</div>
