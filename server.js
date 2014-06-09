@@ -1,11 +1,34 @@
 // modules =================================================
 var express = require('express');
 var app     = express();
+var mysql      = require('mysql');
+var connection = mysql.createConnection(
+	{
+	  host     : 'localhost',
+	  user     : 'root',
+	  password : 'toor',
+	}
+);
+connection.connect(function(err) {
+  if (err) {throw err} else {console.log("connected to DB");
+	};
+});
+
+// DELETE FROM `prz`.`kierunki` WHERE `id`='2';
+// DELETE FROM `prz`.`kierunki` WHERE `id`='1';
+// DELETE FROM `prz`.`kierunki` WHERE `id`='3';
+var queryString5 = 'SELECT * FROM prz.kierunki';
+connection.query(queryString5, function(err, rows, fields){
+	if (err) throw err;
+	for (var i in rows) {
+		console.log('Nazwa kierunku: ', rows[i].nazwa)
+	}
+});
 
 // configuration ===========================================
 
 
-var port = process.env.PORT || 8080; // set our port
+var port = process.env.PORT || 3000; // set our port
 // mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)
 var employees = [{
 	firstName:"Andrzej", surname : "Borzyszkowski", title : "dr", email : "amb@pjwstk.edu.pl", speciality : "RBD",
@@ -47,6 +70,7 @@ app.configure(function() {
 	});
 	app.post('/api/addNewEmployee',function(req,res){
 		console.log(req.body.noweImie);
+		connection.query('INSERT into prz.kierunki VALUES ("'+ req.body.noweImie +'", "'+ req.body.noweImie +'"), ("2", "'+ req.body.noweNazwisko +'"), ("3", "'+ req.body.nowyTytul +'");');
 		employees.push({
 			firstName : req.body.noweImie,
 			surname : req.body.noweNazwisko,

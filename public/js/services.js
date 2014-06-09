@@ -1,4 +1,4 @@
-angular.module('employeeServices',[])
+angular.module('appServices',[])
 .factory('employeeService',['$http',function($http){
 	return {
 		allEmployees : function($scope){
@@ -8,6 +8,7 @@ angular.module('employeeServices',[])
 		},
 		addEmployee : function($scope, imie, nazwisko, tytul, email, przedmiot, minimumEtatowe, rodzajZatrudnienia, dostepnosc){
 			$http.post('/api/addNewEmployee',  {
+					nowyId : employeeId,
 					noweImie : imie,
 					noweNazwisko : nazwisko,
 					nowyTytul : tytul,
@@ -18,9 +19,9 @@ angular.module('employeeServices',[])
 					nowaDostepnosc : dostepnosc
 				}).success(function(){
 					$http.get('/api/getAllEmployees').success(function(data, status, headers, config) {
-				$scope.employees = data;
-			});
+					$scope.employees = data;
 				});
+			});
 		},
 		deleteEmployee : function($scope,id){
 			$http.post('/api/deleteEmployee/',{

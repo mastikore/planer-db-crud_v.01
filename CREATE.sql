@@ -72,7 +72,10 @@ CREATE TABLE IF NOT EXISTS `prz`.`wykladowcy` (
   `nazwisko` VARCHAR(30) NOT NULL,
   `tytul` VARCHAR(10) NOT NULL,
   `mail` VARCHAR(45) NULL DEFAULT NULL,
-  `min_etat` INT(11) NOT NULL,
+  `przedmiot` VARCHAR(30) NOT NULL,	
+  `minimum_etatowe` INT(11) NOT NULL,
+  `rodzaj_zatrudnienia` VARCHAR(30) NOT NULL,
+  `dostepnosc` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `full_name` (`imie` ASC, `nazwisko` ASC))
 ENGINE = InnoDB
@@ -85,8 +88,8 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `prz`.`kierunki` ;
 
 CREATE TABLE IF NOT EXISTS `prz`.`kierunki` (
-  `nazwa` VARCHAR(20) NOT NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
+  `nazwa` VARCHAR(20) NOT NULL,
   UNIQUE INDEX `nazwa_UNIQUE` (`nazwa` ASC),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

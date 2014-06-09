@@ -1,7 +1,7 @@
 var mainApp = angular.module('mainApp', [
     'ngRoute',
-    'employeeControllers',
-    'employeeServices'
+    'appControllers',
+    'appServices'
 ]);
 mainApp.config(['$routeProvider',
     function ($routeProvider) {
