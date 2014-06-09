@@ -1,0 +1,57 @@
+<div class="jumbotron">
+	<div class="row">
+		<div class="col-md-6">
+			<h2>Lista przedmiotów: </h2>
+			<div class="row">
+				<div class="col-md-6">
+					<label>Szukaj</label>
+					<input type="text" ng-model="search" class="form-control"/>
+					<br>
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-12">
+					<table ng-table="subjectTable" class="table table-hover table-bordered">
+						<tr><th>Przedmiot: </th><th>Usuń: </th></tr>
+						<tr ng-repeat="subject in subjects | filter:search">
+							<td><a href="#/subject/{{$index}}">{{subject.subjectName}} {{subject.shortcut}} </a></td>
+							<td data-title="'Usuń'"><a href="" ng-click="usunPrzedmiot($index)" class="glyphicon glyphicon-remove"></a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<span ng-show="subjects.length == 0">List of subjects is empty...</span>
+		</div>
+		<div id="editEmpDiv" class="col-md-6">
+			<h3>Edytuj przedmiot</h3>
+<!-- angular validation -->
+			<form action="#/subjects" name="subjectForm" class="css_form" ng-submit="zaktualizujDanePrzedmiotu(selectedSubject.subjectName,selectedSubject.shortcut,selectedSubject.course,selectedSubject.procedure)">
+				<div class="form-group" ng-class="{ 'has-error' : subjectForm.subjectName.$invalid && !subjectForm.subjectName.$pristine }">	
+					<label>Nazwa: </label>
+					<input type="text" name="subjectName" class="form-control" ng-class="{ success:subjectForm.$valid, danger: subjectForm.$invalid }" ng-model="selectedSubject.subjectName" placeholder="np. Algebra liniowa"  ng-minlength="2" ng-maxlength="20" ng-pattern="/^[A-Za-z_-]+$/">
+					<span ng-show="subjectForm.subjectName.$invalid && !subjectForm.subjectName.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="subjectForm.subjectName.$error.minlength && !subjectForm.subjectName.$pristine" class="help-block"><small>Nazwa nie krótsze niż 2 znaki.</small></span>
+					<span ng-show="subjectForm.subjectName.$error.maxlength && !subjectForm.subjectName.$pristine" class="help-block"><small>Nazwa nie dłuższe niż 20 znaków.</small></span>
+					<span ng-show="subjectForm.subjectName.$error.pattern " class="help-block"><small>Nazwa nie może zawierać cyfr lub znaków.</small></span>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : subjectForm.shortcut.$invalid && !subjectForm.shortcut.$pristine }">	
+					<label>Skrót: </label>
+					<input type="text" name="shortcut" class="form-control" ng-model="selectedSubject.shortcut" placeholder="np. MAS"  ng-minlength="2" ng-maxlength="6">
+					<span ng-show="subjectForm.shortcut.$invalid && !subjectForm.shortcut.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="subjectForm.shortcut.$error.minlength && !subjectForm.shortcut.$pristine" class="help-block"><small>Skrót nie krótszy niż 2 znaki.</small></span>
+					<span ng-show="subjectForm.shortcut.$error.maxlength && !subjectForm.shortcut.$pristine" class="help-block"><small>Skrot nie dłuższy niż 6 znaków.</small></span>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : subjectForm.course.$invalid && !subjectForm.course.$pristine }">	
+					<label>Kierunek: </label>
+					<select type="text" name="course" class="form-control" ng-model="selectedSubject.course" required><option value="informatyka">informatyka</option><option value="garfika">grafika</option></select>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : subjectForm.procedure.$invalid && !subjectForm.procedure.$pristine }">	
+					<label>Tryb: </label>
+					<select type="text" name="procedure" class="form-control" ng-model="selectedSubject.procedure" required><option value="dzienny">dzienny</option><option value="zaoczny">zaoczny</option></select>
+				</div>
+				<button type="submit" class="btn btn-primary" ng-disabled="subjectForm.$invalid">Zapisz zmiany</button><a id="clearBtn" href="#/subjects" class="btn btn-primary">Powrót</a>		
+			</form>
+		</div>
+	</div>
+</div>

@@ -29,7 +29,7 @@
 			<form action="#/courses" name="courseForm" class="css_form" ng-submit="zaktualizujDaneKierunku(selectedCourse.courseName)">
 				<div class="form-group" ng-class="{ 'has-error' : courseForm.courseName.$invalid && !courseForm.courseName.$pristine }">	
 					<label>Nazwa: </label>
-					<input type="text" name="courseName" class="form-control" ng-class="{ success:courseForm.$valid, danger: courseForm.$invalid }" ng-model="nowyKurs.courseName" placeholder="np. Informatyka" ng-minlength="2" ng-maxlength="20" ng-pattern="/^[A-Za-z_-]+$/">
+					<input type="text" name="courseName" class="form-control" ng-class="{ success:courseForm.$valid, danger: courseForm.$invalid }" ng-model="selectedCourse.courseName" placeholder="np. Informatyka" ng-minlength="2" ng-maxlength="20" ng-pattern="/^[A-Za-z_-]+$/">
 					<span ng-show="courseForm.courseName.$invalid && !courseForm.courseName.$pristine" class="help-block"><small>Błędy!</small></span>
 					<span ng-show="courseForm.courseName.$error.minlength && !courseForm.courseName.$pristine" class="help-block"><small>Nazwa nie krótsza niż 2 znaki.</small></span>
 					<span ng-show="courseForm.courseName.$error.maxlength && !courseForm.courseName.$pristine" class="help-block"><small>Nazwa nie dłuższa niż 20 znaków.</small></span>
