@@ -1,1 +1,30 @@
 body { padding-top:30px; }
+.css_form input.ng-invalid.ng-dirty {
+	border-color: #F62217;
+}
+.css_form input.ng-valid.ng-dirty {
+	border-color: #52D017;
+}
+.jumbotron {
+	background: -webkit-linear-gradient(left, white, #e4e4e4, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(left, white, #e4e4e4, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(left, white, #e4e4e4, white); /* For Fx 3.6 to 15 */
+    background: linear-gradient(to right, white, #e4e4e4, white); /* Standard syntax (must be last) */
+}
+
+#clearBtn {
+	margin-left: 5px;
+}
+
+#addEmpDiv {
+	margin-top: 75px;
+}
+
+#editEmpDiv {
+	margin-top: 75px;	
+}
+
+.bs-sidebar .nav > .active > ul {
+    display: block;
+    margin-bottom: 8px;
+}

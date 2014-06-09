@@ -1,7 +1,7 @@
 var mainApp = angular.module('mainApp', [
     'ngRoute',
-    'appControllers',
-    'appServices'
+    'employeeControllers',
+    'employeeServices',
 ]);
 mainApp.config(['$routeProvider',
     function ($routeProvider) {
@@ -17,4 +17,4 @@ mainApp.config(['$routeProvider',
             otherwise({
                 redirectTo: '/employees'
             });
- }]);
+    }]);
