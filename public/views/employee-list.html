@@ -1,0 +1,72 @@
+<div class="jumbotron">
+	<div class="row">
+		<div class="col-md-6">
+			<h2>Lista pracowników: </h2>
+			<div class="row">
+				<div class="col-md-6">
+					<label>Szukaj</label>
+					<input type="text" ng-model="search" class="form-control"/>
+					<br>
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-12">
+					<table ng-table="employeeTable" class="table table-hover table-bordered">
+						<tr><th>Pracownik: </th><th>Usuń: </th></tr>
+						<tr ng-repeat="employee in employees | filter:search">
+							<td><a href="#/employee/{{$index}}">{{employee.title}} {{employee.firstName}} {{employee.surname}} </a></td>
+							<td data-title="'Usuń'"><a href="" ng-click="usunPracownika($index)" class="glyphicon glyphicon-remove"></a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<span ng-show="employees.length == 0">List of employees is empty...</span>
+		</div>
+		<div id="addEmpDiv" class="col-md-6">
+			<h3>Dodaj wykładowcę</h3>
+<!-- angular validation -->
+			<form name="employeeForm" class="css_form" ng-submit="dodajPracownika(nowyPracownik.firstName,nowyPracownik.surname,nowyPracownik.title,nowyPracownik.email,nowyPracownik.employmentType,nowyPracownik.minimumStaffing)">
+				<div class="form-group" ng-class="{ 'has-error' : employeeForm.firstName.$invalid && !employeeForm.firstName.$pristine }">	
+					<label>Imię: </label>
+					<input type="text" name="firstName" class="form-control" ng-class="{ success:employeeForm.$valid, danger: employeeForm.$invalid }" ng-model="nowyPracownik.firstName" placeholder="np. Jan"  ng-minlength="2" ng-maxlength="20" ng-pattern="/^[A-Za-z_-]+$/">
+					<span ng-show="employeeForm.firstName.$invalid && !employeeForm.firstName.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="employeeForm.firstName.$error.minlength && !employeeForm.firstName.$pristine" class="help-block"><small>Imię nie krótsze niż 2 znaki.</small></span>
+					<span ng-show="employeeForm.firstName.$error.maxlength && !employeeForm.firstName.$pristine" class="help-block"><small>Imie nie dłuższe niż 20 znaków.</small></span>
+					<span ng-show="employeeForm.firstName.$error.pattern " class="help-block"><small>Imie nie może zawierać cyfr lub znaków.</small></span>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : employeeForm.surname.$invalid && !employeeForm.surname.$pristine }">	
+					<label>Nazwisko: </label>
+					<input type="text" name="surname" class="form-control" ng-model="nowyPracownik.surname" placeholder="np. Kowalski"  ng-minlength="2" ng-maxlength="30" ng-pattern="/^[A-Za-z_-]+$/">
+					<span ng-show="employeeForm.surname.$invalid && !employeeForm.surname.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="employeeForm.surname.$error.minlength && !employeeForm.surname.$pristine" class="help-block"><small>Nazwisko nie krótsze niż 2 znaki.</small></span>
+					<span ng-show="employeeForm.surname.$error.maxlength && !employeeForm.surname.$pristine" class="help-block"><small>Nazwisko nie dłuższe niż 30 znaków.</small></span>
+					<span ng-show="employeeForm.surname.$error.pattern && !employeeForm.surname.$pristine" class="help-block"><small>Nazwisko nie może zawierać cyfr lub znaków.</small></span>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : employeeForm.title.$invalid && !employeeForm.title.$pristine }">	
+					<label>Tytuł: </label>
+					<select type="text" name="title" class="form-control" ng-model="nowyPracownik.title" required><option value="mgr">mgr</option><option value="mgr inż.">mgr inż.</option><option value="dr">dr</option><option value="dr inż.">dr inż.</option><option value="dr hab.">dr hab.</option><option value="dr hab. inż.">dr hab. inż.</option></select>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : employeeForm.email.$invalid && !employeeForm.email.$pristine }">	
+					<label>Email: </label>
+					<input type="text" name="email" class="form-control" ng-model="nowyPracownik.email" placeholder="np. jankowalski@pjwstjk.edu.pl" ng-maxlength="40" ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/" required>
+					<span ng-show="employeeForm.email.$invalid && !employeeForm.email.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="employeeForm.email.$error.maxlength && !employeeForm.email.$pristine" class="help-block"><small>Email nie dłuższy niż 40 znaków.</small></span>
+					<span ng-show="employeeForm.email.$error.pattern && !employeeForm.email.$pristine" class="help-block"><small>Email nieprawidłowy.</small></span>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : employeeForm.employmentType.$invalid && !employeeForm.employmentType.$pristine }">	
+					<label>Pracownik etatowy: </label><br>
+					<input type="checkbox" name="employmentType" class="default" ng-value-true="true" ng-false-value="false" ng-model="nowyPracownik.employmentType"> Jest pracownikiem etatowym</input>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : employeeForm.minimumStaffing.$invalid && !employeeForm.minimumStaffing.$pristine }" ng-show="nowyPracownik.employmentType">	
+					<label>Minimum etatowe: </label>
+					<input type="text" name="minimumStaffing" class="form-control" ng-model="nowyPracownik.minimumStaffing" placeholder="np. 120" ng-pattern="/^[0-9]{1,3}$/">
+					<span ng-show="employeeForm.minimumStaffing.$invalid && !employeeForm.minimumStaffing.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="employeeForm.minimumStaffing.$error.pattern && !employeeForm.minimumStaffing.$pristine" class="help-block"><small>Zakres cyfr od 0 do 999.</small></span>
+				</div>
+				<button type="submit" class="btn btn-primary" ng-disabled="employeeForm.$invalid">Dodaj pracownika</button><a id="clearBtn" href="#/employees" class="btn btn-warning">Wyczyść formularz</a>
+			</form>
+		</div>
+		</br>
+	</div>
+</div>

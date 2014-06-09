@@ -1,29 +1,6 @@
 // modules =================================================
 var express = require('express');
 var app     = express();
-var mysql      = require('mysql');
-var connection = mysql.createConnection(
-	{
-	  host     : 'localhost',
-	  user     : 'root',
-	  password : 'toor',
-	}
-);
-connection.connect(function(err) {
-  if (err) {throw err} else {console.log("connected to DB");
-	};
-});
-
-// DELETE FROM `prz`.`kierunki` WHERE `id`='2';
-// DELETE FROM `prz`.`kierunki` WHERE `id`='1';
-// DELETE FROM `prz`.`kierunki` WHERE `id`='3';
-var queryString5 = 'SELECT * FROM prz.kierunki';
-connection.query(queryString5, function(err, rows, fields){
-	if (err) throw err;
-	for (var i in rows) {
-		console.log('Nazwa kierunku: ', rows[i].nazwa)
-	}
-});
 
 // configuration ===========================================
 
@@ -31,24 +8,59 @@ connection.query(queryString5, function(err, rows, fields){
 var port = process.env.PORT || 3000; // set our port
 // mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)
 var employees = [{
-	firstName:"Andrzej", surname : "Borzyszkowski", title : "dr", email : "amb@pjwstk.edu.pl", speciality : "RBD",
-	minimumStaffing : "16", employmentType : "etatowy", availability : "Mon, Tue, Wed"
+	firstName:"Andrzej", surname : "Borzyszkowski", title : "dr",
+	email : "amb@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "16"
 },
 {
-	firstName:"Tomasz", surname : "Borzyszkowski", title : "dr", email : "t_borzyszkowski@pjwstk.edu.pl", speciality : "C#",
-	minimumStaffing : "14", employmentType : "etatowy", availability : "Mon, Tue, Wed"
+	firstName:"Tomasz", surname : "Borzyszkowski", title : "dr",
+	email : "t_borzyszkowski@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "14"
 },
 {
-	firstName:"Elżbieta", surname : "Puźniakowska", title : "mgr", email : "ela@pjwstk.edu.pl", speciality : "AM",
-	minimumStaffing : "24", employmentType : "etatowy", availability : "Mon, Tue, Wed"
+	firstName:"Tomasz", surname : "Kowalczyk", title : "mgr",
+	email : "tkowalczyk@pjwstk.edu.pl", employmentType : "false",
+	minimumStaffing : "14"
 },
 {
-	firstName:"Tadeusz", surname : "Puźniakowski", title : "mgr inż.", email : "pantadeusz@pjwstk.edu.pl", speciality : "NAI",
-	minimumStaffing : "20", employmentType : "etatowy", availability : "Mon, Tue, Wed"
+	firstName:"Anna", surname : "Nenca", title : "mgr inż.",
+	email : "nenca@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "14"
 },
 {
-	firstName:"Jacek", surname : "Światowiak", title : "dr", email : "jacek_swiatowiak@pjwstk.edu.pl", speciality : "SAL",
-	minimumStaffing : "", employmentType : "nieetatowy", availability : "Mon, Tue, Wed"
+	firstName:"Jakub", surname : "Neumann", title : "dr",
+	email : "jneumann@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "14"
+},
+{
+	firstName:"Arkadiusz", surname : "Adolph", title : "mgr inż.",
+	email : "aadolph@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "14"
+},
+{
+	firstName:"Patrycja", surname : "Orlowska", title : "dr",
+	email : "t_borzyszkowski@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "14"
+},
+{
+	firstName:"Stanislaw", surname : "Szejko", title : "dr inż.",
+	email : "t_borzyszkowski@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "14"
+},
+{
+	firstName:"Elzbieta", surname : "Puzniakowska", title : "mgr",
+	email : "ela@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "24"
+},
+{
+	firstName:"Tadeusz", surname : "Puzniakowski", title : "mgr inż.",
+	email : "pantadeusz@pjwstk.edu.pl", employmentType : "true",
+	minimumStaffing : "20"
+},
+{
+	firstName:"Jacek", surname : "Swiatowiak", title : "dr",
+	email : "jacek_swiatowiak@pjwstk.edu.pl", employmentType : "",
+	minimumStaffing : ""
 }
 ];
 
@@ -70,16 +82,14 @@ app.configure(function() {
 	});
 	app.post('/api/addNewEmployee',function(req,res){
 		console.log(req.body.noweImie);
-		connection.query('INSERT into prz.kierunki VALUES ("'+ req.body.noweImie +'", "'+ req.body.noweImie +'"), ("2", "'+ req.body.noweNazwisko +'"), ("3", "'+ req.body.nowyTytul +'");');
 		employees.push({
 			firstName : req.body.noweImie,
 			surname : req.body.noweNazwisko,
 			title : req.body.nowyTytul,
 			email : req.body.nowyMail,
-			speciality : req.body.nowyPrzedmiot,
-			minimumStaffing : req.body.noweMinimumEtatowe,
 			employmentType : req.body.nowyRodzajZatrudnienia,
-			availability : req.body.nowaDostepnosc});
+			minimumStaffing : req.body.noweMinimumEtatowe
+		});
 		res.send(200);
 	});
 	app.post('/api/deleteEmployee',function(req,res){
@@ -89,19 +99,15 @@ app.configure(function() {
 	app.post('/api/updateEmployeeData',function(req,res){
 		console.log(req.body.index + " " + req.body.firstName 
 		+ " " + req.body.surname + " " + req.body.title 
-		+ " " + req.body.email + " " + req.body.speciality 
-		+ " " + req.body.minimumStaffing + " " + req.body.employmentType 
-		+ " " + req.body.availability);
+		+ " " + req.body.email + " " + req.body.minimumStaffing 
+		+ " " + req.body.employmentType);
 		employees[req.body.index].firstName = req.body.firstName;
 		employees[req.body.index].surname = req.body.surname;
 		employees[req.body.index].title = req.body.title;
 		employees[req.body.index].email = req.body.email;
-		employees[req.body.index].speciality = req.body.speciality;
-		employees[req.body.index].minimumStaffing = req.body.minimumStaffing;
 		employees[req.body.index].employmentType = req.body.employmentType;
-		employees[req.body.index].availability = req.body.availability;
-				res.send(200);
-
+		employees[req.body.index].minimumStaffing = req.body.minimumStaffing;
+		res.send(200);
 	});
 	//frontend
 	app.get('*', function(req, res) {

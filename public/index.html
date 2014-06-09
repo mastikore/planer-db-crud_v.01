@@ -20,18 +20,31 @@
 		<script src="js/app.js"></script>
 	</head>
 	<body ng-app="mainApp" ng-controller="employeeCtrl">
-	<div class="container">
-		
-		<!-- HEADER -->
-		<nav class="navbar navbar-default">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="/">Zarządzanie zasobami Planera</a>
-			</div>
-		</nav>
-	
-		<!-- ANGULAR DYNAMIC CONTENT -->
-		<div ng-view></div>
-	
-	</div>
+		<div class="col-md-3">
+			<ul class="nav nav-list">
+				<li class="nav-header">Nawigacja</li>
+				<li class="active"><a href="#">Strona startowa</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Roczniki</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+				<li><a href="#">Wykładowcy</a></li>
+			</ul>
+		</div>
+		<div class="col-md-9">
+			<!-- HEADER -->
+			<nav class="navbar navbar-default">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Zarządzanie zasobami Planera</a>
+				</div>
+			</nav>
+			<!-- ANGULAR DYNAMIC CONTENT -->
+			<div ng-view></div>
+		</div>
 	</body>
 </html>
