@@ -1,0 +1,50 @@
+<div class="jumbotron">
+	<div class="row">
+		<div class="col-md-6">
+			<h2>Lista sal: </h2>
+			<div class="row">
+				<div class="col-md-6">
+					<label>Szukaj</label>
+					<input type="text" ng-model="search" class="form-control"/>
+					<br>
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-12">
+					<table ng-table="roomTable" class="table table-hover table-bordered">
+						<tr><th>Sala: </th><th>Usuń: </th></tr>
+						<tr ng-repeat="room in rooms | filter:search">
+							<td><a href="#/room/{{$index}}">{{room.roomName}}</a></td>
+							<td data-title="'Usuń'"><a href="" ng-click="usunSale($index)" class="glyphicon glyphicon-remove"></a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<span ng-show="rooms.length == 0">List of rooms is empty...</span>
+		</div>
+		<div id="editEmpDiv" class="col-md-6">
+			<h3>Edytuj salę</h3>
+<!-- angular validation -->
+			<form action="#/rooms" name="roomForm" class="css_form" ng-submit="zaktualizujDaneSali(selectedRoom.roomName,selectedRoom.amount)">
+				<div class="form-group" ng-class="{ 'has-error' : roomForm.roomName.$invalid && !roomForm.roomName.$pristine }">	
+					<label>Numer sali: </label>
+					<input type="text" name="roomName" class="form-control" ng-class="{ success:roomForm.$valid, danger: roomForm.$invalid }" ng-model="selectedRoom.roomName" placeholder="np. 112"  ng-minlength="2" ng-maxlength="4" ng-pattern="/^[0-9]+$/">
+					<span ng-show="roomForm.roomName.$invalid && !roomForm.roomName.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="roomForm.roomName.$error.minlength && !roomForm.roomName.$pristine" class="help-block"><small>Numer sali nie krótsze niż 2 znaki.</small></span>
+					<span ng-show="roomForm.roomName.$error.maxlength && !roomForm.roomName.$pristine" class="help-block"><small>Numer sali nie dłuższe niż 4 znaki.</small></span>
+					<span ng-show="roomForm.roomName.$error.pattern " class="help-block"><small>Numer sali nie może zawierać liter lub znaków.</small></span>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : roomForm.amount.$invalid && !roomForm.amount.$pristine }">	
+					<label>Liczba miejsc: </label>
+					<input type="text" name="amount" class="form-control" ng-model="selectedRoom.amount" placeholder="np. 30"  ng-minlength="1" ng-maxlength="4" ng-pattern="/^[0-9]+$/">
+					<span ng-show="roomForm.amount.$invalid && !roomForm.amount.$pristine" class="help-block"><small>Błędy!</small></span>
+					<span ng-show="roomForm.amount.$error.minlength && !roomForm.amount.$pristine" class="help-block"><small>Liczba miejsc nie krótsza niż 1 znak.</small></span>
+					<span ng-show="roomForm.amount.$error.maxlength && !roomForm.amount.$pristine" class="help-block"><small>Liczba miejsc nie dłuższa niż 4 znaki.</small></span>
+					<span ng-show="roomForm.amount.$error.pattern && !roomForm.amount.$pristine" class="help-block"><small>Liczba miejsc nie może zawierać liter lub znaków.</small></span>
+				</div>
+				<button type="submit" class="btn btn-primary" ng-disabled="roomForm.$invalid">Zapisz zmiany</button><a id="clearBtn" href="#/rooms" class="btn btn-primary">Powrót</a>		
+			</form>
+		</div>
+	</div>
+</div>
