@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', []);
+var appControllers = angular.module('employeeControllers', []);
 
 appControllers.controller('employeeCtrl', [
 	'$scope',

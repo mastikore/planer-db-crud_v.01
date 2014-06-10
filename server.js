@@ -6,7 +6,6 @@ var app     = express();
 
 
 var port = process.env.PORT || 3000; // set our port
-// mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)
 var employees = [{
 	firstName:"Andrzej", surname : "Borzyszkowski", title : "dr",
 	email : "amb@pjwstk.edu.pl", employmentType : "true",

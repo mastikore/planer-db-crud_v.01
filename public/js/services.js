@@ -1,4 +1,4 @@
-angular.module('appServices',[])
+angular.module('employeeServices',[])
 .factory('employeeService',['$http',function($http){
 	return {
 		allEmployees : function($scope){
